@@ -1,0 +1,3 @@
+﻿  client.cpp
+C:\Users\s0169449\source\repos\seti\clienti\client.cpp(55,34): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  clienti.vcxproj -> C:\Users\s0169449\source\repos\seti\x64\Debug\clienti.exe
