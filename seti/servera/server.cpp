@@ -2,47 +2,106 @@
 #include <winsock2.h>
 #include <string>
 #include <windows.h>
+#include <WS2tcpip.h>
 #pragma comment (lib, "Ws2_32.lib")
-#pragma warning(disable: 4996)
+//#pragma warning(disable: 4996)
 using namespace std;
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+//#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SRV_PORT 1234 //server port
 #define BUF_SIZE 64 //buffer size
+
 int main() {
+    
     char buff[1024];
-    if (WSAStartup(0x0202, (WSADATA*)&buff[0]))
-    {
-        //Error type for case of not correct loading of library assets
-        cout << "Error WSAStartup\n" << WSAGetLastError();
-        return -1;
+
+    WSADATA wsData;
+    int erStat = WSAStartup(MAKEWORD(2, 2), &wsData);
+    if (erStat != 0) {
+        cout << "Error WinSock version initializaion # ";
+        cout << WSAGetLastError();
+        return 1;
     }
-    SOCKET s, s_new;
-    int from_len;
+    else
+        cout << "WinSock initialization is OK" << endl;
+
+    SOCKET ServSock = socket(AF_INET, SOCK_STREAM, 0);
+    if (ServSock == INVALID_SOCKET) {
+        cout << "Error initialization socket # " << WSAGetLastError() << endl;
+        closesocket(ServSock);
+        WSACleanup();
+        return 1;
+    }
+    else
+        cout << "Server socket initialization is OK" << endl;
+
+    sockaddr_in servInfo;
+    ZeroMemory(&servInfo, sizeof(servInfo));
+
+    servInfo.sin_family = AF_INET;
+    servInfo.sin_addr.s_addr = 0;
+    servInfo.sin_port = htons(SRV_PORT);
+
+    erStat = bind(ServSock, (sockaddr*)&servInfo, sizeof(servInfo));
+    if (erStat != 0) {
+        cout << "Error Socket binding to server. Error # " << WSAGetLastError() << endl;
+        closesocket(ServSock);
+        WSACleanup();
+        return 1;
+    }
+    else
+        cout << "Binding socket to Server info is OK" << endl;
+
+    erStat = listen(ServSock, 10);
+    if (erStat != 0) {
+        cout << "Can't start to listen to. Error # " << WSAGetLastError() << endl;
+        closesocket(ServSock);
+        WSACleanup();
+        return 1;
+    }
+    else {
+        cout << "Listening..." << endl;
+    }
+
+    string msg;
+
+    sockaddr_in clientInfo;
+    ZeroMemory(&clientInfo, sizeof(clientInfo));
+    int clientInfo_size = sizeof(clientInfo);
+
+    short packet_size = 0;
+
     char buf[BUF_SIZE] = { 0 };
-    sockaddr_in sin, from_sin;
-    s = socket(AF_INET, SOCK_STREAM, 0);
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = 0;
-    sin.sin_port = htons(SRV_PORT);
-    bind(s, (sockaddr*)&sin, sizeof(sin));
-    string msg, msg1;
-    listen(s, 10);
-    while (1) {
-        from_len = sizeof(from_sin);
-        s_new = accept(s, (sockaddr*)&from_sin, &from_len);
-        cout << "new connected client! " << endl;
-        msg = "ti kto takoy kuda prishel";
-        while (1) {
-            send(s_new, (char*)&msg[0], msg.size(), 0);
-            from_len = recv(s_new, (char*)buf, BUF_SIZE, 0);
-            buf[from_len] = 0;
-            msg1 = (string)buf;
-            cout << msg1 << endl;
-            if (msg1 == "Bye") break;
-            getline(cin, msg);
+    while (true) {
+        SOCKET ClientConn = accept(ServSock, (sockaddr*)&clientInfo, &clientInfo_size);
+        if (ClientConn == INVALID_SOCKET) {
+            cout << "Client detected, but can't connect to a client. Error # " << WSAGetLastError() << endl;
+            closesocket(ServSock);
+            closesocket(ClientConn);
+            WSACleanup();
+            return 1;
         }
-        cout << "client is lost";
-        closesocket(s_new);
+        else
+            cout << "Connection to a client established successfully" << endl;
+
+        while (true) {
+            packet_size = recv(ClientConn, (char*)buf, BUF_SIZE, 0);
+            buf[packet_size] = 0;
+            msg = string(buf);
+            cout << "Recieved message from client: " << buf << endl;
+            if (msg == "Bye") break;
+
+            cout << "Your (server) message to client: ";
+            getline(cin, msg);
+            packet_size = send(ClientConn, (char*)&msg[0], msg.size(), 0);
+            if (packet_size == SOCKET_ERROR) {
+                cout << "Can't send message to Server. Error # " << WSAGetLastError() << endl;
+                closesocket(ClientConn);
+                WSACleanup();
+                return 1;
+            }
+        }
+        cout << "The Client has disconnected" << endl;
+        closesocket(ClientConn);
     }
     return 0;
 }

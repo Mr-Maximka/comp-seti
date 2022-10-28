@@ -1,3 +1,4 @@
 ﻿  client.cpp
-C:\Users\s0169449\source\repos\seti\clienti\client.cpp(55,34): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-  clienti.vcxproj -> C:\Users\s0169449\source\repos\seti\x64\Debug\clienti.exe
+C:\Repository\Mr-Maximka.github.io\seti\clienti\client.cpp(91,67): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Repository\Mr-Maximka.github.io\seti\clienti\client.cpp(19,10): warning C4101: buff: неиспользованная локальная переменная
+  clienti.vcxproj -> C:\Repository\Mr-Maximka.github.io\seti\x64\Debug\clienti.exe
