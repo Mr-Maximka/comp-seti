@@ -1,0 +1,4 @@
+﻿  server.cpp
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(102,38): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(21,10): warning C4101: buff: неиспользованная локальная переменная
+  servera.vcxproj -> C:\Repository\Mr-Maximka.github.io\seti2\x64\Debug\servera.exe
