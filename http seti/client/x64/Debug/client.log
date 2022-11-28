@@ -1,0 +1,3 @@
+﻿  client.cpp
+C:\Users\79654\source\repos\http seti\client\client.cpp(33,20): warning C4101: addr: неиспользованная локальная переменная
+  client.vcxproj -> C:\Users\79654\source\repos\http seti\x64\Debug\client.exe

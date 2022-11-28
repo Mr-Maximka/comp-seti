@@ -1,0 +1,5 @@
+﻿  server.cpp
+C:\Users\79654\source\repos\http seti\server\server.cpp(71,20): warning C4309: инициализация: усечение константного значения
+C:\Users\79654\source\repos\http seti\server\server.cpp(75,26): warning C4244: =: преобразование "SOCKET" в "int", возможна потеря данных
+C:\Users\79654\source\repos\http seti\server\server.cpp(121,43): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  server.vcxproj -> C:\Users\79654\source\repos\http seti\x64\Debug\server.exe
