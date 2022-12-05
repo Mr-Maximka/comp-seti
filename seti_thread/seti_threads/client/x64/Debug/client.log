@@ -1,0 +1,3 @@
+﻿  client.cpp
+C:\Repository\Mr-Maximka.github.io\seti2\clienti\client.cpp(21,10): warning C4101: buff: неиспользованная локальная переменная
+  client.vcxproj -> C:\Repository\Mr-Maximka.github.io\seti_thread\seti_threads\x64\Debug\client.exe

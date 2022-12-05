@@ -1,0 +1,7 @@
+﻿  server.cpp
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(81,11): warning C4101: result: неиспользованная локальная переменная
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(29,10): warning C4101: buff: неиспользованная локальная переменная
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(168,34): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(152,9): warning C4101: len: неиспользованная локальная переменная
+C:\Repository\Mr-Maximka.github.io\seti2\servera\server.cpp(194): warning C4715: ConToClient: значение возвращается не при всех путях выполнения
+  server.vcxproj -> C:\Repository\Mr-Maximka.github.io\seti_thread\seti_threads\x64\Debug\server.exe
